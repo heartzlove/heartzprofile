@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>하츠 · Heartz</title>
+  <link rel="icon" type="image/jpeg" href="https://profile.img.sooplive.co.kr/LOGO/op/ophillia/ophillia.jpg">
+  <meta name="description" content="하츠(Heartz) 공식 페이지">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="하츠 · Heartz">
+  <meta property="og:description" content="별 · 하트 · 픽셀을 좋아하는 종합게임">
+  <meta property="og:image" content="https://profile.img.sooplive.co.kr/LOGO/op/ophillia/ophillia.jpg">
+  <meta property="og:image:width" content="600"><meta property="og:image:height" content="600">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+  <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="nav-inner">
+      <div class="nav-links">
+        <a class="navpill active" href="index.html">프로필</a>
+        <a class="navpill" href="schedule/">일정</a>
+        <a class="navpill" href="work/">업보</a>
+      </div>
+      <button class="theme-switch" id="themeSwitch" type="button" aria-label="다크모드 전환">🌙</button>
+    </div>
+  </nav>
+
+  <main class="wrap stagger">
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-stars" aria-hidden="true">
+        <span class="s1">✦</span><span class="s2">✧</span><span class="s3">⋆</span><span class="s4">✦</span><span class="s5">✧</span>
+      </div>
+      <div class="hero-inner">
+        <div class="hero-avatar">
+          <img class="hero-avatar-img" id="h-avatar-img" src="" alt="하츠 프로필 이미지" style="display:none"
+               onerror="this.style.display='none'; document.getElementById('h-avatar-ph').style.display='flex';">
+          <span class="hero-avatar-ph" id="h-avatar-ph">✦</span>
+        </div>
+        <div class="hero-text">
+          <div class="hero-name-row"><h1 class="hero-name" id="h-name">하츠</h1><span class="hero-en" id="h-en">Heartz</span></div>
+          <p class="hero-concept" id="h-concept"></p>
+          <div class="hero-links">
+            <a class="sbtn" id="lnk-soop" href="#" target="_blank" rel="noopener">🎮 SOOP</a>
+            <a class="sbtn" id="lnk-youtube" href="#" target="_blank" rel="noopener">▶ 유튜브</a>
+            <a class="sbtn" id="lnk-cafe" href="#" target="_blank" rel="noopener">☕ 팬카페</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STATS -->
+    <section class="stats">
+      <div class="stat"><span class="stat-emoji">✨</span><span class="stat-label">데뷔</span><span class="stat-val" id="st-debut">—</span></div>
+      <div class="stat"><span class="stat-emoji">🎂</span><span class="stat-label">생일</span><span class="stat-val" id="st-birthday">—</span></div>
+      <div class="stat"><span class="stat-emoji">💙</span><span class="stat-label">팬네임</span><span class="stat-val" id="st-fan">—</span></div>
+      <div class="stat"><span class="stat-emoji">🎮</span><span class="stat-label">콘텐츠</span><span class="stat-val" id="st-content">—</span></div>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="card">
+      <h2 class="sec-title"><span class="dot"></span>하츠 소개</h2>
+      <div class="about-grid">
+        <div class="about-item"><span class="ak">✦ 모티프</span><span class="av" id="ab-motif">—</span></div>
+        <div class="about-item"><span class="ak">📌 시그니처</span><span class="av" id="ab-sig">—</span></div>
+        <div class="about-item"><span class="ak">🏠 소속</span><span class="av" id="ab-agency">—</span></div>
+        <div class="about-item"><span class="ak">🍀 성격</span><span class="av" id="ab-personality">—</span></div>
+        <div class="about-item"><span class="ak">🎤 노래</span><span class="av" id="ab-song">—</span></div>
+      </div>
+    </section>
+
+    <!-- SCHEDULE -->
+    <section class="card">
+      <h2 class="sec-title"><span class="dot"></span>방송 일정</h2>
+      <div class="day-row">
+        <span class="day" id="day-0">일</span><span class="day" id="day-1">월</span>
+        <span class="day" id="day-2">화</span><span class="day" id="day-3">수</span>
+        <span class="day" id="day-4">목</span><span class="day" id="day-5">금</span>
+        <span class="day" id="day-6">토</span>
+      </div>
+      <p class="sched-note" id="sched-note"></p>
+      <div class="upcoming" id="upcoming" style="display:none">
+        <span class="up-label">📌 다가오는 일정</span>
+        <div id="upcoming-list"></div>
+      </div>
+    </section>
+
+    <!-- 다시보기 -->
+    <section class="card">
+      <div class="sec-row">
+        <h2 class="sec-title"><span class="dot"></span>다시보기</h2>
+        <a class="sec-more" id="vod-more" href="#" target="_blank" rel="noopener">전체 보기 ↗</a>
+      </div>
+      <div class="vod-carousel" id="vod-carousel">
+        <div class="vod-frame">
+          <a class="vod-stage" id="vod-stage" href="#" target="_blank" rel="noopener"></a>
+          <button class="vod-nav prev" type="button" aria-label="이전 다시보기">‹</button>
+          <button class="vod-nav next" type="button" aria-label="다음 다시보기">›</button>
+        </div>
+        <div class="vod-caption">
+          <div class="vod-cap-title" id="vod-cap-title"></div>
+          <div class="vod-cap-meta" id="vod-cap-meta"></div>
+        </div>
+        <div class="vod-dots" id="vod-dots"></div>
+      </div>
+    </section>
+
+    <footer class="foot">
+      <div class="foot-links">
+        <a id="foot-soop" href="#" target="_blank" rel="noopener">SOOP</a>·
+        <a id="foot-youtube" href="#" target="_blank" rel="noopener">유튜브</a>·
+        <a id="foot-cafe" href="#" target="_blank" rel="noopener">팬카페</a>·
+        <a href="admin/">관리자</a>
+      </div>
+      <div class="foot-copy" id="foot-copy">© 2026 하츠 · Heartz</div>
+    </footer>
+
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="supabase.js"></script>
+  <script>
+    function setText(id, v){ var el=document.getElementById(id); if(el) el.textContent = v || ''; }
+    function setHref(id, v){ var el=document.getElementById(id); if(el) el.setAttribute('href', v || '#'); }
+
+    async function loadProfile(){
+      var p = await getProfile();
+      setText('h-name', p.name); setText('h-en', p.reading); setText('h-concept', p.concept);
+      // 아바타: 직접 지정 우선, 없으면 SOOP 아이디로 자동
+      var av = p.avatar || soopAvatar(p.soop_id);
+      var img = document.getElementById('h-avatar-img'), ph = document.getElementById('h-avatar-ph');
+      if(av){ img.src = av; img.style.display='block'; ph.style.display='none'; }
+      // 소셜 (히어로 + 푸터)
+      setHref('lnk-soop', p.soop); setHref('lnk-youtube', p.youtube); setHref('lnk-cafe', p.cafe);
+      setHref('foot-soop', p.soop); setHref('foot-youtube', p.youtube); setHref('foot-cafe', p.cafe);
+      setHref('vod-more', p.vod_url);
+      // 스탯
+      setText('st-debut', p.debut); setText('st-birthday', p.birthday);
+      setText('st-fan', p.fan_name); setText('st-content', p.content);
+      // 소개
+      setText('ab-motif', p.motif); setText('ab-sig', p.signature); setText('ab-agency', p.agency);
+      setText('ab-personality', p.personality); setText('ab-song', p.song);
+      // 방송 요일
+      var days = Array.isArray(p.days) ? p.days.map(String) : [];
+      for(var i=0;i<=6;i++){ var c=document.getElementById('day-'+i); if(c) c.className='day'+(days.indexOf(String(i))>-1?' on':''); }
+      setText('sched-note', p.sched_note);
+      if(p.name) setText('foot-copy', '© 2026 '+p.name+' · '+(p.reading||''));
+    }
+
+    async function loadUpcoming(){
+      var rows = await fetchAll('events','edate', true);
+      if(rows === null) rows = EVENTS_DEFAULTS.slice();
+      var today = new Date().toISOString().slice(0,10);
+      var future = rows.filter(function(e){ return (e.edate||'') >= today; })
+                       .sort(function(a,b){ return (a.edate||'').localeCompare(b.edate||''); })
+                       .slice(0,3);
+      var box = document.getElementById('upcoming'), list = document.getElementById('upcoming-list');
+      if(!future.length){ box.style.display='none'; return; }
+      box.style.display='';
+      list.innerHTML = future.map(function(e){
+        return '<div class="up-row"><span class="up-badge">'+esc(fmtBadge(e.edate))+'</span>'
+             + '<span class="up-text">'+esc(e.title)+'</span></div>';
+      }).join('');
+    }
+
+    async function loadVods(){
+      var rows = await fetchAll('vods','vdate', false);
+      if(rows === null) rows = VODS_DEFAULTS.slice();
+      var carousel = document.getElementById('vod-carousel');
+      if(!rows.length){ carousel.innerHTML = '<div class="empty">아직 등록된 다시보기가 없어요 ✦</div>'; return; }
+      var stage=document.getElementById('vod-stage'), capTit=document.getElementById('vod-cap-title'),
+          capMeta=document.getElementById('vod-cap-meta'), dotsBox=document.getElementById('vod-dots'), i=0;
+      dotsBox.innerHTML = rows.map(function(_,idx){ return '<button class="vod-dot" type="button" aria-label="'+(idx+1)+'번째"></button>'; }).join('');
+      var dots = dotsBox.querySelectorAll('.vod-dot');
+      function render(){
+        var v = rows[i]; stage.setAttribute('href', v.link || '#');
+        var html = '<span class="vod-badge">다시보기</span>';
+        if(v.thumb) html += '<img src="'+esc(v.thumb)+'" alt="'+esc(v.title)+'" onerror="this.style.display=\'none\'">';
+        if(v.dur) html += '<span class="vod-dur">'+esc(v.dur)+'</span>';
+        html += '<span class="vod-playbtn">▶</span>';
+        stage.innerHTML = html;
+        capTit.textContent = v.title || '';
+        capMeta.textContent = v.vdate ? ('📅 '+v.vdate) : '';
+        for(var k=0;k<dots.length;k++) dots[k].className='vod-dot'+(k===i?' on':'');
+      }
+      function go(n){ i=(n+rows.length)%rows.length; render(); }
+      carousel.querySelector('.vod-nav.prev').addEventListener('click', function(e){ e.preventDefault(); go(i-1); });
+      carousel.querySelector('.vod-nav.next').addEventListener('click', function(e){ e.preventDefault(); go(i+1); });
+      for(var k=0;k<dots.length;k++){ (function(idx){ dots[idx].addEventListener('click', function(){ go(idx); }); })(k); }
+      var sx=null;
+      stage.addEventListener('touchstart', function(e){ sx=e.touches[0].clientX; }, {passive:true});
+      stage.addEventListener('touchend', function(e){ if(sx===null) return; var dx=e.changedTouches[0].clientX-sx; if(Math.abs(dx)>40) go(i+(dx<0?1:-1)); sx=null; }, {passive:true});
+      render();
+    }
+
+    initTheme();
+    loadProfile(); loadUpcoming(); loadVods();
+    initIframeResize();
+  </script>
+</body>
+</html>
