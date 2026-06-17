@@ -33,6 +33,7 @@
 
     <!-- HERO -->
     <section class="hero">
+      <button class="inquiry-btn" type="button" onclick="openInquiry()">✉️ 문의</button>
       <div class="hero-stars" aria-hidden="true">
         <span class="s1">✦</span><span class="s2">✧</span><span class="s3">⋆</span><span class="s4">✦</span><span class="s5">✧</span>
       </div>
@@ -116,26 +117,26 @@
       </div>
     </section>
 
-    <!-- 문의 -->
-    <section class="card">
-      <h2 class="sec-title"><span class="dot"></span>문의 · 한마디</h2>
-      <p class="inq-note" style="margin-bottom:12px">하츠에게 하고 싶은 말이나 문의를 남겨주세요. (닉네임 필수)</p>
-      <div class="inq-form">
-        <input id="inq-nick" maxlength="20" placeholder="닉네임 *">
-        <textarea id="inq-msg" rows="3" maxlength="500" placeholder="내용을 적어주세요"></textarea>
-        <div class="inq-row">
-          <button class="inq-btn" type="button" id="inq-send">보내기</button>
-          <span class="inq-msg" id="inq-result"></span>
-        </div>
-      </div>
-    </section>
-
     <footer class="foot">
       <div class="foot-copy" id="foot-copy">© 2026 하츠 Official.</div>
       <div class="foot-biz" id="foot-biz">비즈니스 문의 · heartzstar87@gmail.com</div>
     </footer>
 
   </main>
+
+  <!-- 문의 모달 -->
+  <div class="iq-ov" id="iq-ov" onclick="if(event.target===this)closeInquiry()">
+    <div class="iq-modal">
+      <div class="iq-title">✉️ 문의하기</div>
+      <div class="iq-desc">하츠에게 하고 싶은 말을 남겨주세요 🤍</div>
+      <input class="iq-input" id="iq-nick" placeholder="닉네임 (필수)">
+      <textarea class="iq-input" id="iq-msg" rows="4" placeholder="문의 내용을 적어주세요"></textarea>
+      <div class="iq-btns">
+        <button class="iq-cancel" type="button" onclick="closeInquiry()">취소</button>
+        <button class="iq-send" type="button" onclick="sendInquiry()">보내기 🤍</button>
+      </div>
+    </div>
+  </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
   <script src="supabase.js"></script>
@@ -225,26 +226,27 @@
       render();
     }
 
-    function flashInq(t){ var el=document.getElementById('inq-result'); if(el){ el.textContent=t; setTimeout(function(){ el.textContent=''; }, 4000); } }
-    function initInquiry(page){
-      var btn=document.getElementById('inq-send'); if(!btn) return;
-      btn.addEventListener('click', async function(){
-        var nick=(document.getElementById('inq-nick').value||'').trim();
-        var msg=(document.getElementById('inq-msg').value||'').trim();
-        if(!nick){ alert('닉네임을 적어주세요'); return; }
-        if(!msg){ alert('내용을 적어주세요'); return; }
-        if(!db){ flashInq('지금은 미리보기예요. 배포하면 문의가 저장돼요!'); return; }
-        btn.disabled=true;
-        var ok = await insertRow('inquiries', { nickname:nick, message:msg, page:page });
-        btn.disabled=false;
-        if(ok){ document.getElementById('inq-nick').value=''; document.getElementById('inq-msg').value=''; flashInq('보내졌어요! 고마워요 🤍'); }
-        else flashInq('전송에 실패했어요. 잠시 후 다시 시도해주세요.');
-      });
+    var INQ_PAGE = '프로필';
+    function openInquiry(){
+      var ov=document.getElementById('iq-ov'), e=window.event, y=80;
+      if(e){ y=(e.pageY!=null?e.pageY:(e.clientY||0)); }
+      ov.style.top = Math.max(10, y-60)+'px';
+      ov.classList.add('show');
+    }
+    function closeInquiry(){ document.getElementById('iq-ov').classList.remove('show'); }
+    async function sendInquiry(){
+      var nick=document.getElementById('iq-nick').value.trim();
+      if(!nick){ alert('닉네임을 적어주세요'); return; }
+      var msg=document.getElementById('iq-msg').value.trim();
+      if(!msg){ alert('문의 내용을 적어주세요'); return; }
+      if(!db){ alert('지금은 미리보기예요. 배포(서버 연결) 후 전송됩니다.'); return; }
+      var ok = await insertRow('inquiries', { nickname:nick, message:msg, page:INQ_PAGE });
+      if(ok){ alert('문의가 전송됐어요! 🤍'); document.getElementById('iq-nick').value=''; document.getElementById('iq-msg').value=''; closeInquiry(); }
+      else alert('전송 실패 ㅠㅠ 잠시 후 다시 시도해주세요');
     }
 
     initTheme();
     loadProfile(); loadUpcoming(); loadVods();
-    initInquiry('프로필');
     initIframeResize();
   </script>
 </body>

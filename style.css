@@ -246,19 +246,26 @@ body.dark .work-chip.done{ background:#1d3327; color:#56c98a; }
 .work-stat{ font-size:14px; color:var(--text-soft); font-weight:600; }
 .work-stat b{ color:var(--main-dark); font-size:17px; font-weight:800; }
 
-/* ── 문의 폼 ── */
-.inq-note{ font-size:13px; color:var(--text-soft); }
-.inq-form{ display:flex; flex-direction:column; gap:10px; }
-.inq-form input, .inq-form textarea{ width:100%; padding:12px 14px; border-radius:12px; border:1.5px solid var(--line);
-  background:var(--card); color:var(--text); font-size:14px; font-family:inherit; outline:none; transition:border-color .16s ease; }
-.inq-form textarea{ resize:vertical; min-height:84px; }
-.inq-form input:focus, .inq-form textarea:focus{ border-color:var(--main); }
-.inq-row{ display:flex; gap:12px; align-items:center; }
-.inq-btn{ padding:11px 24px; border-radius:12px; border:none; background:linear-gradient(135deg,var(--main),var(--main-dark));
-  color:#fff; font-weight:800; font-size:14px; cursor:pointer; transition:transform .16s ease; }
-.inq-btn:hover{ transform:translateY(-2px); }
-.inq-btn:disabled{ opacity:.6; cursor:default; transform:none; }
-.inq-msg{ font-size:13px; font-weight:700; color:#2f9e63; }
+/* ── 문의 (우상단 버튼 + 모달) ── */
+@keyframes pop{ from{transform:scale(.95);opacity:0} to{transform:scale(1);opacity:1} }
+.inquiry-btn{ position:absolute; top:16px; right:18px; z-index:5; background:var(--card); border:1.5px solid var(--line);
+  color:var(--main-dark); border-radius:999px; padding:8px 16px; font-size:14px; font-weight:800; cursor:pointer;
+  transition:all .18s ease; box-shadow:0 4px 12px rgba(120,150,250,.2); }
+.inquiry-btn:hover{ background:var(--main); color:#fff; border-color:var(--main); }
+.iq-ov{ position:absolute; left:0; right:0; background:rgba(30,40,70,.4); display:none; align-items:flex-start;
+  justify-content:center; z-index:600; padding:16px; }
+.iq-ov.show{ display:flex; }
+.iq-modal{ background:var(--card); border-radius:22px; width:100%; max-width:420px; padding:24px;
+  box-shadow:0 20px 60px rgba(60,80,160,.3); animation:pop .2s ease; }
+.iq-title{ font-size:18px; font-weight:800; color:var(--main-dark); margin-bottom:4px; }
+.iq-desc{ font-size:13px; color:var(--text-soft); margin-bottom:16px; }
+.iq-input{ width:100%; padding:12px 14px; border-radius:12px; border:1.5px solid var(--line); background:var(--card);
+  color:var(--text); font-size:14px; outline:none; margin-bottom:10px; font-family:inherit; box-sizing:border-box; transition:border-color .16s ease; }
+.iq-input:focus{ border-color:var(--main); }
+.iq-btns{ display:flex; gap:8px; margin-top:6px; }
+.iq-btns button{ flex:1; padding:12px; border-radius:12px; border:none; font-size:14px; font-weight:800; cursor:pointer; }
+.iq-send{ background:linear-gradient(135deg,var(--main),var(--main-dark)); color:#fff; }
+.iq-cancel{ background:var(--main-light); color:var(--main-dark); }
 
 /* ── 푸터 ── */
 .foot{ text-align:center; margin-top:8px; padding-top:6px; }
