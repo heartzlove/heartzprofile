@@ -3,8 +3,8 @@
    ⬇⬇ 배포할 때 아래 2줄만 본인 프로젝트 값으로 바꾸면 됩니다 ⬇⬇
    (Supabase → Settings → API 에서 복사)
 ===================================================================== */
-const SUPABASE_URL  = 'https://{{SUPABASE프로젝트ID}}.supabase.co';
-const SUPABASE_ANON = '{{SUPABASE_ANON_KEY}}';   // anon public 키 (사이트에 넣어도 안전)
+const SUPABASE_URL  = 'https://icrrimwxdjxtdhuyxngw.supabase.co';
+const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImljcnJpbXd4ZGp4dGRodXl4bmd3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE2NzAyNjksImV4cCI6MjA5NzI0NjI2OX0.UTonh2rXKvWddyWv-ekTSt_ATy8z02neXfiXmy4L2Gg';   // anon public 키 (사이트에 넣어도 안전)
 
 /* ---- Supabase 클라이언트 (설정 전이면 자동으로 기본값만 사용) ---- */
 let db = null;
