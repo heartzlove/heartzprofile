@@ -8,6 +8,85 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
   <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../style.css">
+  <style>
+    .calendar{ background:var(--card); border:1.5px solid var(--line); border-radius:22px;
+      box-shadow:0 6px 20px rgba(120,140,200,.1); overflow:hidden; }
+    .cal-header{ display:flex; align-items:center; justify-content:space-between; padding:18px 22px; }
+    .cal-title{ font-size:20px; font-weight:800; color:var(--text); }
+    .cal-nav{ width:38px; height:38px; border-radius:50%; border:1.5px solid var(--line); background:var(--card);
+      cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:18px; color:var(--main-dark);
+      transition:all .18s ease; }
+    .cal-nav:hover{ background:var(--main-light); }
+    .cal-grid{ display:grid; grid-template-columns:repeat(7,1fr); }
+    .cal-dow{ padding:10px 4px; text-align:center; font-size:13px; font-weight:800; color:var(--main-dark); }
+    .cal-dow:first-child{ color:#e0556a; } .cal-dow:last-child{ color:var(--accent-dark); }
+    .cal-cell{ height:90px; border-top:1px solid var(--line); border-right:1px solid var(--line);
+      padding:5px 5px 6px; position:relative; overflow:hidden; }
+    .cal-cell:nth-child(7n){ border-right:none; }
+    .cal-cell.other{ opacity:.32; }
+    .cal-cell.has{ cursor:pointer; }
+    .cal-cell.has:hover{ background:var(--main-light); }
+    .cal-cell.today{ background:var(--main-light); }
+    .cal-cell.today .cal-date{ background:linear-gradient(135deg,var(--main),var(--accent)); color:#fff;
+      border-radius:50%; width:22px; height:22px; display:inline-flex; align-items:center; justify-content:center;
+      box-shadow:0 3px 8px rgba(63,182,232,.4); }
+    .cal-cell.hl{ box-shadow:inset 0 0 0 2px var(--main); border-radius:10px; }
+    .cal-date{ font-size:13px; font-weight:700; color:var(--text-soft); padding:1px 3px; }
+    .cal-cell:nth-child(7n+1) .cal-date{ color:#e0556a; }
+    .cal-cell:nth-child(7n) .cal-date{ color:var(--accent-dark); }
+    .ev{ font-size:10px; padding:3px 6px; border-radius:7px; margin-top:3px; white-space:nowrap;
+      overflow:hidden; text-overflow:ellipsis; font-weight:700; max-width:100%; }
+
+    /* 색상 팔레트 */
+    .c-blue{ background:#e7edff; color:#4456c7; } .c-cyan{ background:#d9f1fb; color:#2a93cf; }
+    .c-mint{ background:#dcf5ea; color:#2f9e63; } .c-pink{ background:#ffe4ef; color:#d95f8a; }
+    .c-lavender{ background:#ece2fb; color:#7a52c7; } .c-amber{ background:#fff0cc; color:#b07d18; }
+    .c-coral{ background:#ffe2da; color:#d9663f; } .c-gray{ background:#eef0f5; color:#6b7280; }
+    body.dark .c-blue{ background:#222a45; color:#aebdff; } body.dark .c-cyan{ background:#143246; color:#7fd0f0; }
+    body.dark .c-mint{ background:#143626; color:#74d6a0; } body.dark .c-pink{ background:#3a1f2c; color:#f59fc0; }
+    body.dark .c-lavender{ background:#2a2142; color:#c2a8f0; } body.dark .c-amber{ background:#3a300f; color:#e0b652; }
+    body.dark .c-coral{ background:#3a241c; color:#f0a085; } body.dark .c-gray{ background:#23262e; color:#9aa3b3; }
+
+    /* 다가오는 일정 */
+    .up-item{ display:flex; align-items:center; gap:14px; padding:14px 16px; border-radius:14px; background:var(--card);
+      border:1px solid var(--line); border-left:5px solid var(--main); margin-bottom:9px; cursor:pointer;
+      transition:transform .14s ease, box-shadow .14s ease; }
+    .up-item:hover{ transform:translateX(2px); box-shadow:0 6px 16px rgba(120,150,250,.16); }
+    .up-date{ flex-shrink:0; width:88px; }
+    .up-d1{ font-size:13px; font-weight:800; color:var(--text); }
+    .up-info{ flex:1; min-width:0; }
+    .up-title{ font-size:15px; font-weight:700; color:var(--text); }
+    .up-time{ font-size:12px; color:var(--text-soft); margin-top:2px; }
+    .up-pill{ padding:5px 14px; border-radius:999px; font-size:12px; font-weight:800; flex-shrink:0; }
+
+    /* 모달 */
+    .ov{ position:absolute; left:0; right:0; background:rgba(30,40,70,.4); display:none; align-items:flex-start;
+      justify-content:center; z-index:500; padding:16px; }
+    .ov.show{ display:flex; }
+    .modal{ background:var(--card); border-radius:22px; width:100%; max-width:380px; padding:22px;
+      box-shadow:0 20px 60px rgba(60,80,160,.3); animation:pop .2s ease; }
+    @keyframes pop{ from{transform:scale(.95);opacity:0} to{transform:scale(1);opacity:1} }
+    .m-date{ font-size:14px; color:var(--text-soft); margin-bottom:8px; }
+    .m-badge{ display:inline-block; padding:4px 12px; border-radius:999px; font-size:12px; font-weight:800; margin-bottom:14px; }
+    .m-part{ background:var(--main-light); border:1px solid var(--line); border-radius:12px; padding:12px 14px; margin-bottom:8px; }
+    .m-part .pt{ font-size:12px; font-weight:800; color:var(--main-dark); }
+    .m-part .pn{ font-size:15px; font-weight:600; color:var(--text); margin-top:3px; }
+    .m-desc{ font-size:13px; color:var(--text-soft); background:var(--main-light); border-radius:12px; padding:11px 14px;
+      margin-bottom:8px; white-space:pre-wrap; }
+    .m-close{ width:100%; padding:12px; border-radius:12px; border:none; background:var(--main-light); color:var(--main-dark);
+      font-size:14px; font-weight:800; cursor:pointer; margin-top:6px; }
+
+    @media (max-width:560px){
+      .cal-header{ padding:14px; } .cal-title{ font-size:17px; }
+      .cal-nav{ width:32px; height:32px; font-size:15px; }
+      .cal-dow{ padding:7px 1px; font-size:11px; }
+      .cal-cell{ height:66px; padding:3px 2px 4px; }
+      .cal-date{ font-size:11px; padding:0 2px; } .cal-cell.today .cal-date{ width:18px; height:18px; }
+      .ev{ font-size:8px; padding:2px 4px; border-radius:5px; margin-top:2px; }
+      .up-item{ gap:10px; padding:11px 12px; } .up-date{ width:74px; } .up-d1{ font-size:12px; }
+      .up-title{ font-size:14px; } .up-pill{ padding:4px 11px; font-size:11px; }
+    }
+  </style>
 </head>
 <body>
 
@@ -23,73 +102,119 @@
   </nav>
 
   <main class="wrap stagger">
-
     <div style="text-align:center; margin:6px 0 2px;">
       <h1 class="page-title">일정</h1>
       <p class="page-sub">하츠 방송 일정 ✦</p>
     </div>
 
-    <!-- 방송 요일 -->
-    <section class="card">
-      <h2 class="sec-title"><span class="dot"></span>방송 요일</h2>
-      <div class="day-row">
-        <span class="day" id="day-0">일</span><span class="day" id="day-1">월</span>
-        <span class="day" id="day-2">화</span><span class="day" id="day-3">수</span>
-        <span class="day" id="day-4">목</span><span class="day" id="day-5">금</span>
-        <span class="day" id="day-6">토</span>
+    <div class="calendar">
+      <div class="cal-header">
+        <button class="cal-nav" type="button" id="prevM" aria-label="이전 달">‹</button>
+        <span class="cal-title" id="calTitle"></span>
+        <button class="cal-nav" type="button" id="nextM" aria-label="다음 달">›</button>
       </div>
-      <p class="sched-note" id="sched-note"></p>
+      <div class="cal-grid" id="calGrid"></div>
+    </div>
+
+    <section class="card">
+      <h2 class="sec-title"><span class="dot"></span>다가오는 일정</h2>
+      <div id="upcoming"></div>
     </section>
 
-    <!-- 전체 일정 -->
-    <section class="card">
-      <h2 class="sec-title"><span class="dot"></span>전체 일정</h2>
-      <div id="ev-future-wrap" style="display:none">
-        <div class="month-head">📌 다가오는 일정</div>
-        <div class="ev-list" id="ev-future"></div>
-      </div>
-      <div id="ev-past-wrap" style="display:none">
-        <div class="month-head">🗓️ 지난 일정</div>
-        <div class="ev-list" id="ev-past"></div>
-      </div>
-      <div class="empty" id="ev-empty" style="display:none">아직 등록된 일정이 없어요 ✦</div>
-    </section>
-
-    <footer class="foot">
-      <div class="foot-copy" id="foot-copy">© 2026 하츠 · Heartz</div>
-    </footer>
-
+    <footer class="foot"><div class="foot-copy" id="foot-copy">© 2026 하츠 · Heartz</div></footer>
   </main>
+
+  <div class="ov" id="ov" onclick="if(event.target===this)closeModal()">
+    <div class="modal" id="modal-body"></div>
+  </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
   <script src="../supabase.js"></script>
   <script>
-    function rowHtml(e){
-      var t = e.type || '방송';
-      var cls = t === '휴방' ? 'off' : (t === '특별' ? 'special' : 'bcast');
-      return '<div class="up-row"><span class="up-badge">'+esc(fmtBadge(e.edate))+'</span>'
-           + '<span class="up-text">'+esc(e.title)+'</span>'
-           + '<span class="ev-tag '+cls+'">'+esc(t)+'</span></div>';
-    }
-    async function load(){
-      var p = await getProfile();
-      var days = Array.isArray(p.days) ? p.days.map(String) : [];
-      for(var i=0;i<=6;i++){ var c=document.getElementById('day-'+i); if(c) c.className='day'+(days.indexOf(String(i))>-1?' on':''); }
-      document.getElementById('sched-note').textContent = p.sched_note || '';
-      if(p.name) document.getElementById('foot-copy').textContent = '© 2026 '+p.name+' · '+(p.reading||'');
+    var curY, curM, allSchedule = [];
+    var DAYS = ['일','월','화','수','목','금','토'];
+    function kind(t){ return t === '휴방' ? 'off' : 'on'; }
+    function colorClass(s){ return 'c-' + (s.color || (kind(s.type)==='off' ? 'gray' : 'blue')); }
 
-      var rows = await fetchAll('events','edate', true);
-      if(rows === null) rows = EVENTS_DEFAULTS.slice();
-      var today = new Date().toISOString().slice(0,10);
-      var future = rows.filter(function(e){ return (e.edate||'') >= today; })
-                       .sort(function(a,b){ return (a.edate||'').localeCompare(b.edate||''); });
-      var past = rows.filter(function(e){ return (e.edate||'') < today; })
-                     .sort(function(a,b){ return (b.edate||'').localeCompare(a.edate||''); });
-      if(!rows.length){ document.getElementById('ev-empty').style.display=''; return; }
-      if(future.length){ document.getElementById('ev-future-wrap').style.display=''; document.getElementById('ev-future').innerHTML = future.map(rowHtml).join(''); }
-      if(past.length){ document.getElementById('ev-past-wrap').style.display=''; document.getElementById('ev-past').innerHTML = past.map(rowHtml).join(''); }
+    async function init(){
+      var p = await getProfile();
+      if(p.name) document.getElementById('foot-copy').textContent = '© 2026 '+p.name+' · '+(p.reading||'');
+      var rows = await fetchAll('schedule','date', true);
+      allSchedule = (rows === null) ? SCHEDULE_DEFAULTS.slice() : rows;
+      var now = new Date(); curY = now.getFullYear(); curM = now.getMonth();
+      renderCalendar(); renderUpcoming(); initIframeResize();
     }
-    initTheme(); load(); initIframeResize();
+    function changeMonth(d){
+      curM += d;
+      if(curM > 11){ curM = 0; curY++; } if(curM < 0){ curM = 11; curY--; }
+      renderCalendar(); initIframeResize();
+    }
+    function renderCalendar(){
+      document.getElementById('calTitle').textContent = curY+'년 '+(curM+1)+'월';
+      var grid = document.getElementById('calGrid');
+      var first = new Date(curY, curM, 1), last = new Date(curY, curM+1, 0);
+      var startDay = first.getDay(), today = new Date();
+      var html = DAYS.map(function(d){ return '<div class="cal-dow">'+d+'</div>'; }).join('');
+      var prevLast = new Date(curY, curM, 0).getDate();
+      for(var i=startDay-1; i>=0; i--) html += '<div class="cal-cell other"><span class="cal-date">'+(prevLast-i)+'</span></div>';
+      for(var d=1; d<=last.getDate(); d++){
+        var dateStr = curY+'-'+String(curM+1).padStart(2,'0')+'-'+String(d).padStart(2,'0');
+        var isToday = today.getFullYear()===curY && today.getMonth()===curM && today.getDate()===d;
+        var events = allSchedule.filter(function(s){ return s.date === dateStr; });
+        var hl = events.some(function(e){ return e.highlight; });
+        var evHtml = events.map(function(e){
+          var label = (e.time ? e.time+' ' : '') + (e.title || (kind(e.type)==='off'?'휴방':'방송'));
+          return '<div class="ev '+colorClass(e)+'" title="'+esc(label)+'">'+esc(label)+'</div>';
+        }).join('');
+        var cls = 'cal-cell'+(isToday?' today':'')+(events.length?' has':'')+(hl?' hl':'');
+        var click = events.length ? ' onclick="openModal(\''+dateStr+'\')"' : '';
+        html += '<div class="'+cls+'"'+click+'><span class="cal-date">'+d+'</span>'+evHtml+'</div>';
+      }
+      var totalCells = startDay + last.getDate();
+      var rem = totalCells % 7 === 0 ? 0 : 7 - (totalCells % 7);
+      for(var j=1; j<=rem; j++) html += '<div class="cal-cell other"><span class="cal-date">'+j+'</span></div>';
+      grid.innerHTML = html;
+    }
+    function renderUpcoming(){
+      var today = new Date().toISOString().slice(0,10);
+      var upcoming = allSchedule.filter(function(s){ return (s.date||'') >= today; })
+                                .sort(function(a,b){ return (a.date||'').localeCompare(b.date||''); }).slice(0,12);
+      var el = document.getElementById('upcoming');
+      if(!upcoming.length){ el.innerHTML = '<div class="empty">다가오는 일정이 없어요 ✦</div>'; return; }
+      el.innerHTML = upcoming.map(function(s){
+        var dd = new Date(s.date+'T00:00:00'); var off = kind(s.type)==='off';
+        var label = off ? '휴방' : '방송';
+        var times = [s.time, s.time2].filter(Boolean).join(' · ');
+        return '<div class="up-item '+colorClass(s)+'" style="border-left-color:currentColor" onclick="openModal(\''+s.date+'\')">'
+          + '<div class="up-date"><div class="up-d1">'+String(dd.getMonth()+1).padStart(2,'0')+'-'+String(dd.getDate()).padStart(2,'0')+' ('+DAYS[dd.getDay()]+')</div></div>'
+          + '<div class="up-info"><div class="up-title">'+esc(s.title || label)+'</div>'+(times?'<div class="up-time">'+esc(times)+'</div>':'')+'</div>'
+          + '<span class="up-pill '+colorClass(s)+'">'+label+'</span></div>';
+      }).join('');
+    }
+    function openModal(dateStr){
+      var events = allSchedule.filter(function(s){ return s.date === dateStr; });
+      if(!events.length) return;
+      var dd = new Date(dateStr+'T00:00:00');
+      var html = '<div class="m-date">'+dateStr+' ('+DAYS[dd.getDay()]+')</div>';
+      events.forEach(function(s){
+        var off = kind(s.type)==='off';
+        html += '<div class="m-badge '+colorClass(s)+'">'+(off?'휴방':'방송')+'</div>';
+        html += '<div class="m-part"><div class="pt">'+(s.time?esc(s.time):'1부')+'</div><div class="pn">'+esc(s.title || (off?'휴방':'방송'))+'</div></div>';
+        if(s.title2 || s.time2) html += '<div class="m-part"><div class="pt">'+(s.time2?esc(s.time2):'2부')+'</div><div class="pn">'+esc(s.title2||'방송')+'</div></div>';
+        if(s.description) html += '<div class="m-desc">'+esc(s.description)+'</div>';
+      });
+      html += '<button class="m-close" onclick="closeModal()">닫기</button>';
+      document.getElementById('modal-body').innerHTML = html;
+      var ov = document.getElementById('ov'), e = window.event, y = 200;
+      if(e){ y = (e.pageY != null ? e.pageY : (e.clientY||0)); }
+      ov.style.top = Math.max(10, y - 80) + 'px';
+      ov.classList.add('show');
+    }
+    function closeModal(){ document.getElementById('ov').classList.remove('show'); }
+
+    document.getElementById('prevM').addEventListener('click', function(){ changeMonth(-1); });
+    document.getElementById('nextM').addEventListener('click', function(){ changeMonth(1); });
+    initTheme(); init();
   </script>
 </body>
 </html>

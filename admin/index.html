@@ -82,8 +82,7 @@
       <!-- 일정 -->
       <div class="adm-panel" id="tab-sched">
         <div class="card">
-          <h2 class="sec-title"><span class="dot"></span>방송 요일</h2>
-          <p class="adm-hint" style="margin:0 0 10px">탭해서 켜기/끄기</p>
+          <h2 class="sec-title"><span class="dot"></span>방송 요일 · 문구 <span style="font-size:12px;font-weight:600;color:var(--text-soft)">(메인 페이지용)</span></h2>
           <div class="adm-day-toggles" id="day-toggles">
             <button class="adm-day" data-day="0" type="button">일</button>
             <button class="adm-day" data-day="1" type="button">월</button>
@@ -96,15 +95,39 @@
           <div class="adm-field" style="margin-top:14px"><label>일정 안내 문구</label><input id="f-note" placeholder="월·화·수·금 저녁 8시 · 토·일 낮 1시 · 목요일 휴방"></div>
           <div class="adm-save-row"><button class="adm-btn primary" id="save-sched" type="button">저장</button><span class="adm-msg" id="msg-sched"></span></div>
         </div>
+
         <div class="card" style="margin-top:16px">
-          <h2 class="sec-title"><span class="dot"></span>일정 추가</h2>
+          <h2 class="sec-title"><span class="dot"></span>달력 일정 추가</h2>
           <div class="adm-row2">
             <div class="adm-field"><label>날짜</label><input type="date" id="ev-date"></div>
-            <div class="adm-field"><label>구분</label><select id="ev-type"><option>방송</option><option>특별</option><option>휴방</option></select></div>
+            <div class="adm-field"><label>구분</label><select id="ev-type"><option>방송</option><option>휴방</option></select></div>
           </div>
-          <div class="adm-field"><label>내용</label><input id="ev-title" placeholder="예: 저녁 8시 마인크래프트"></div>
+          <div class="adm-row2">
+            <div class="adm-field"><label>색상</label>
+              <select id="ev-color">
+                <option value="blue">블루</option><option value="cyan">시안</option><option value="mint">민트</option>
+                <option value="pink">핑크</option><option value="lavender">라벤더</option><option value="amber">앰버</option>
+                <option value="coral">코랄</option><option value="gray">그레이</option>
+              </select>
+            </div>
+            <div class="adm-field"><label>강조 테두리</label>
+              <label style="display:flex;align-items:center;gap:8px;font-weight:600;color:var(--text);font-size:14px;padding-top:8px">
+                <input type="checkbox" id="ev-hl" style="width:18px;height:18px"> 켜기
+              </label>
+            </div>
+          </div>
+          <div class="adm-row2">
+            <div class="adm-field"><label>1부 시간</label><input id="ev-time" placeholder="예: 저녁 8시"></div>
+            <div class="adm-field"><label>1부 내용</label><input id="ev-title" placeholder="예: 마인크래프트"></div>
+          </div>
+          <div class="adm-row2">
+            <div class="adm-field"><label>2부 시간 (선택)</label><input id="ev-time2"></div>
+            <div class="adm-field"><label>2부 내용 (선택)</label><input id="ev-title2"></div>
+          </div>
+          <div class="adm-field"><label>메모 (선택)</label><textarea id="ev-desc" rows="2"></textarea></div>
           <button class="adm-btn primary" id="add-ev" type="button">＋ 추가</button>
-          <div class="adm-list" id="ev-adm-list"></div>
+          <p class="adm-hint">휴방으로 표시하려면 구분을 '휴방'으로, 색은 '그레이' 추천.</p>
+          <div class="adm-list" id="sched-adm-list"></div>
         </div>
       </div>
 
@@ -128,14 +151,31 @@
       <!-- 업보 -->
       <div class="adm-panel" id="tab-work">
         <div class="card">
-          <h2 class="sec-title"><span class="dot"></span>업보 추가</h2>
-          <div class="adm-field"><label>내용</label><input id="w-title" placeholder="예: 롤 다이아 찍으면 노래방송"></div>
+          <h2 class="sec-title"><span class="dot"></span>시청자 관리</h2>
           <div class="adm-row2">
-            <div class="adm-field"><label>상태</label><select id="w-status"><option>진행중</option><option>완료</option></select></div>
-            <div class="adm-field"><label>메모 (선택)</label><input id="w-note"></div>
+            <div class="adm-field"><label>닉네임</label><input id="vw-nick"></div>
+            <div class="adm-field"><label>SOOP 아이디 (프사 자동, 선택)</label><input id="vw-soop"></div>
           </div>
-          <button class="adm-btn primary" id="add-work" type="button">＋ 추가</button>
-          <div class="adm-list" id="work-adm-list"></div>
+          <button class="adm-btn primary" id="add-viewer" type="button">＋ 시청자 추가</button>
+          <div class="adm-list" id="viewer-adm-list"></div>
+        </div>
+
+        <div class="card" style="margin-top:16px">
+          <h2 class="sec-title"><span class="dot"></span>업보 항목 관리</h2>
+          <div class="adm-row2">
+            <div class="adm-field"><label>항목 이름</label><input id="ty-name" placeholder="예: 노래 신청"></div>
+            <div class="adm-field"><label>분류</label><select id="ty-cat"><option>일반</option><option>이벤트</option></select></div>
+          </div>
+          <button class="adm-btn primary" id="add-type" type="button">＋ 항목 추가</button>
+          <div class="adm-list" id="type-adm-list"></div>
+        </div>
+
+        <div class="card" style="margin-top:16px">
+          <h2 class="sec-title"><span class="dot"></span>카운트 입력</h2>
+          <div class="adm-field"><label>시청자 선택</label><select id="cnt-viewer"></select></div>
+          <div id="cnt-types"></div>
+          <div class="adm-save-row"><button class="adm-btn primary" id="save-counts" type="button">카운트 저장</button><span class="adm-msg" id="msg-counts"></span></div>
+          <p class="adm-hint">시청자를 고르면 각 항목 옆에 숫자를 입력할 수 있어요. 0으로 두면 그 항목은 표시되지 않습니다.</p>
         </div>
       </div>
 
@@ -146,9 +186,11 @@
   <script src="../supabase.js"></script>
   <script>
     (function(){
-      // ⚠️ 관리자 비밀번호 — 배포할 때 아래 {{관리자비밀번호}} 를 바꾸세요 (소스에 보이므로 '버리는 비번' 권장)
-      var ADMIN_PW = '1234';
+      // ⚠️ 관리자 비밀번호 — 배포할 때 {{관리자비밀번호}} 를 바꾸세요 (소스에 보이므로 '버리는 비번' 권장)
+      var ADMIN_PW = '{{관리자비밀번호}}';
       var demo = ADMIN_PW.indexOf('{{') !== -1;
+      var NEEDS = '저장하려면 supabase.js 에 Supabase 주소·키를 먼저 넣어주세요.';
+      var NEEDS_ADD = '추가하려면 supabase.js 에 Supabase 주소·키를 먼저 넣어주세요.';
 
       var login = document.getElementById('login'), panel = document.getElementById('panel');
       document.getElementById('login-hint').textContent = demo ? '데모 비밀번호: admin' : '';
@@ -162,86 +204,24 @@
       document.getElementById('loginBtn').addEventListener('click', doLogin);
       document.getElementById('pw').addEventListener('keydown', function(e){ if(e.key === 'Enter') doLogin(); });
 
-      // 탭
       var tabs = document.querySelectorAll('.adm-tab');
       tabs.forEach(function(t){ t.addEventListener('click', function(){
         tabs.forEach(function(x){ x.classList.remove('active'); });
         document.querySelectorAll('.adm-panel').forEach(function(p){ p.classList.remove('active'); });
-        t.classList.add('active');
-        document.getElementById('tab-'+t.dataset.tab).classList.add('active');
+        t.classList.add('active'); document.getElementById('tab-'+t.dataset.tab).classList.add('active');
       }); });
 
-      var PROFILE = {};
-      var MAP = { name:'name', reading:'reading', concept:'concept', debut:'debut', birthday:'birthday',
-        fan:'fan_name', content:'content', motif:'motif', sig:'signature', agency:'agency',
-        personality:'personality', song:'song', soop:'soop', youtube:'youtube', cafe:'cafe',
-        vodurl:'vod_url', soopid:'soop_id', avatar:'avatar' };
       function gv(id){ var el=document.getElementById(id); return el ? el.value.trim() : ''; }
       function sv(id,v){ var el=document.getElementById(id); if(el) el.value = (v==null?'':v); }
       function flash(id,msg){ var el=document.getElementById(id); el.textContent=msg; setTimeout(function(){ el.textContent=''; }, 2500); }
-      var NEEDS = '저장하려면 supabase.js 에 Supabase 주소·키를 먼저 넣어주세요.';
 
-      async function loadProfileForm(){
-        PROFILE = await getProfile();
-        for(var k in MAP) sv('f-'+k, PROFILE[MAP[k]]);
-        var days = Array.isArray(PROFILE.days) ? PROFILE.days.map(String) : [];
-        document.querySelectorAll('.adm-day').forEach(function(b){ b.classList.toggle('on', days.indexOf(b.dataset.day) > -1); });
-        sv('f-note', PROFILE.sched_note);
-      }
-      document.querySelectorAll('.adm-day').forEach(function(b){ b.addEventListener('click', function(){ b.classList.toggle('on'); }); });
-
-      document.getElementById('save-profile').addEventListener('click', async function(){
-        for(var k in MAP) PROFILE[MAP[k]] = gv('f-'+k);
-        if(await saveProfile(PROFILE)) flash('msg-profile','저장됐어요 ✓'); else alert(NEEDS);
-      });
-      document.getElementById('save-sched').addEventListener('click', async function(){
-        var days=[]; document.querySelectorAll('.adm-day').forEach(function(b){ if(b.classList.contains('on')) days.push(parseInt(b.dataset.day,10)); });
-        PROFILE.days = days; PROFILE.sched_note = gv('f-note');
-        if(await saveProfile(PROFILE)) flash('msg-sched','저장됐어요 ✓'); else alert(NEEDS);
-      });
-
-      async function loadEvents(){
-        var rows = await fetchAll('events','edate',true); if(rows===null) rows = EVENTS_DEFAULTS.slice();
-        renderList('ev-adm-list', rows, function(e){
-          return { title:(fmtBadge(e.edate)||e.edate||'')+'  ·  '+(e.title||''), sub:'구분: '+(e.type||'방송') };
-        }, 'events', loadEvents);
-      }
-      document.getElementById('add-ev').addEventListener('click', async function(){
-        var edate=gv('ev-date'), title=gv('ev-title'), type=gv('ev-type')||'방송';
-        if(!edate || !title){ alert('날짜와 내용을 적어주세요'); return; }
-        if(await insertRow('events',{ edate:edate, title:title, type:type })){ sv('ev-title',''); loadEvents(); } else alert('추가하려면 Supabase를 먼저 연결해주세요.');
-      });
-
-      async function loadVods(){
-        var rows = await fetchAll('vods','vdate',false); if(rows===null) rows = VODS_DEFAULTS.slice();
-        renderList('vod-adm-list', rows, function(v){
-          return { title:(v.title||''), sub:(v.vdate||'')+(v.dur?(' · '+v.dur):'')+(v.thumb?' · 썸네일O':' · 썸네일X') };
-        }, 'vods', loadVods);
-      }
-      document.getElementById('add-vod').addEventListener('click', async function(){
-        var t=gv('v-title'); if(!t){ alert('제목을 적어주세요'); return; }
-        if(await insertRow('vods',{ title:t, vdate:gv('v-date'), dur:gv('v-dur'), link:gv('v-link'), thumb:gv('v-thumb') })){
-          ['v-title','v-dur','v-link','v-thumb'].forEach(function(i){ sv(i,''); }); loadVods();
-        } else alert('추가하려면 Supabase를 먼저 연결해주세요.');
-      });
-
-      async function loadWork(){
-        var rows = await fetchAll('work','id',true); if(rows===null) rows = WORK_DEFAULTS.slice();
-        renderList('work-adm-list', rows, function(w){
-          return { title:(w.title||''), sub:'상태: '+(w.status||'진행중')+(w.note?(' · '+w.note):'') };
-        }, 'work', loadWork);
-      }
-      document.getElementById('add-work').addEventListener('click', async function(){
-        var t=gv('w-title'); if(!t){ alert('내용을 적어주세요'); return; }
-        if(await insertRow('work',{ title:t, status:gv('w-status')||'진행중', note:gv('w-note') })){ sv('w-title',''); sv('w-note',''); loadWork(); } else alert('추가하려면 Supabase를 먼저 연결해주세요.');
-      });
-
+      // ---- 공통 목록 렌더 + 삭제 ----
       function renderList(boxId, rows, fmt, table, reload){
         var box=document.getElementById(boxId);
         if(!rows.length){ box.innerHTML='<div class="empty">아직 없어요</div>'; return; }
         box.innerHTML = rows.map(function(r){
           var f=fmt(r);
-          return '<div class="adm-item"><div class="ai-main"><div class="ai-title">'+esc(f.title)+'</div><div class="ai-sub">'+esc(f.sub)+'</div></div>'
+          return '<div class="adm-item"><div class="ai-main"><div class="ai-title">'+esc(f.title)+'</div><div class="ai-sub">'+esc(f.sub||'')+'</div></div>'
                + '<button class="adm-btn danger" data-id="'+(r.id!=null?r.id:'')+'" type="button">삭제</button></div>';
         }).join('');
         box.querySelectorAll('.adm-btn.danger').forEach(function(b){
@@ -254,7 +234,124 @@
         });
       }
 
-      function loadAll(){ loadProfileForm(); loadEvents(); loadVods(); loadWork(); }
+      // ---- 프로필 ----
+      var PROFILE = {};
+      var MAP = { name:'name', reading:'reading', concept:'concept', debut:'debut', birthday:'birthday',
+        fan:'fan_name', content:'content', motif:'motif', sig:'signature', agency:'agency',
+        personality:'personality', song:'song', soop:'soop', youtube:'youtube', cafe:'cafe',
+        vodurl:'vod_url', soopid:'soop_id', avatar:'avatar' };
+      async function loadProfileForm(){
+        PROFILE = await getProfile();
+        for(var k in MAP) sv('f-'+k, PROFILE[MAP[k]]);
+        var days = Array.isArray(PROFILE.days) ? PROFILE.days.map(String) : [];
+        document.querySelectorAll('.adm-day').forEach(function(b){ b.classList.toggle('on', days.indexOf(b.dataset.day) > -1); });
+        sv('f-note', PROFILE.sched_note);
+      }
+      document.querySelectorAll('.adm-day').forEach(function(b){ b.addEventListener('click', function(){ b.classList.toggle('on'); }); });
+      document.getElementById('save-profile').addEventListener('click', async function(){
+        for(var k in MAP) PROFILE[MAP[k]] = gv('f-'+k);
+        if(await saveProfile(PROFILE)) flash('msg-profile','저장됐어요 ✓'); else alert(NEEDS);
+      });
+      document.getElementById('save-sched').addEventListener('click', async function(){
+        var days=[]; document.querySelectorAll('.adm-day').forEach(function(b){ if(b.classList.contains('on')) days.push(parseInt(b.dataset.day,10)); });
+        PROFILE.days = days; PROFILE.sched_note = gv('f-note');
+        if(await saveProfile(PROFILE)) flash('msg-sched','저장됐어요 ✓'); else alert(NEEDS);
+      });
+
+      // ---- 일정(달력) ----
+      async function loadSchedule(){
+        var rows = await fetchAll('schedule','date',true); if(rows===null) rows = SCHEDULE_DEFAULTS.slice();
+        renderList('sched-adm-list', rows, function(s){
+          var label = (s.time?s.time+' ':'')+(s.title || (s.type==='휴방'?'휴방':'방송'));
+          return { title:(fmtBadge(s.date)||s.date||'')+'  ·  '+label, sub:'구분: '+(s.type||'방송')+' · 색: '+(s.color||'blue')+(s.highlight?' · 강조':'') };
+        }, 'schedule', loadSchedule);
+      }
+      document.getElementById('add-ev').addEventListener('click', async function(){
+        var date=gv('ev-date'); if(!date){ alert('날짜를 골라주세요'); return; }
+        var obj = { date:date, time:gv('ev-time'), title:gv('ev-title'), time2:gv('ev-time2'), title2:gv('ev-title2'),
+          description:gv('ev-desc'), type:gv('ev-type')||'방송', color:gv('ev-color')||'blue',
+          highlight: document.getElementById('ev-hl').checked };
+        if(await insertRow('schedule', obj)){ ['ev-time','ev-title','ev-time2','ev-title2','ev-desc'].forEach(function(i){ sv(i,''); }); document.getElementById('ev-hl').checked=false; loadSchedule(); }
+        else alert(NEEDS_ADD);
+      });
+
+      // ---- 다시보기 ----
+      async function loadVods(){
+        var rows = await fetchAll('vods','vdate',false); if(rows===null) rows = VODS_DEFAULTS.slice();
+        renderList('vod-adm-list', rows, function(v){
+          return { title:(v.title||''), sub:(v.vdate||'')+(v.dur?(' · '+v.dur):'')+(v.thumb?' · 썸네일O':' · 썸네일X') };
+        }, 'vods', loadVods);
+      }
+      document.getElementById('add-vod').addEventListener('click', async function(){
+        var t=gv('v-title'); if(!t){ alert('제목을 적어주세요'); return; }
+        if(await insertRow('vods',{ title:t, vdate:gv('v-date'), dur:gv('v-dur'), link:gv('v-link'), thumb:gv('v-thumb') })){
+          ['v-title','v-dur','v-link','v-thumb'].forEach(function(i){ sv(i,''); }); loadVods();
+        } else alert(NEEDS_ADD);
+      });
+
+      // ---- 업보: 시청자 / 항목 / 카운트 ----
+      var VIEWERS=[], TYPES=[], COUNTS=[];
+
+      async function loadViewers(){
+        var rows = await fetchAll('viewers','sort_order',true); VIEWERS = (rows===null)?VIEWERS_DEFAULTS.slice():rows;
+        renderList('viewer-adm-list', VIEWERS, function(v){
+          return { title:(v.nickname||''), sub:(v.soop_id?('아이디: '+v.soop_id):'아이디 없음') };
+        }, 'viewers', async function(){ await loadViewers(); populateViewerSelect(); refreshCountInputs(); });
+      }
+      document.getElementById('add-viewer').addEventListener('click', async function(){
+        var nick=gv('vw-nick'); if(!nick){ alert('닉네임을 적어주세요'); return; }
+        var maxo = VIEWERS.reduce(function(m,v){ return Math.max(m, v.sort_order||0); }, 0);
+        if(await insertRow('viewers',{ nickname:nick, soop_id:gv('vw-soop'), sort_order:maxo+1 })){ sv('vw-nick',''); sv('vw-soop',''); await loadViewers(); populateViewerSelect(); }
+        else alert(NEEDS_ADD);
+      });
+
+      async function loadTypes(){
+        var rows = await fetchAll('upbo_types','sort_order',true); TYPES = (rows===null)?UPBO_TYPES_DEFAULTS.slice():rows;
+        renderList('type-adm-list', TYPES, function(t){
+          return { title:(t.name||''), sub:'분류: '+(t.category||'일반') };
+        }, 'upbo_types', async function(){ await loadTypes(); refreshCountInputs(); });
+      }
+      document.getElementById('add-type').addEventListener('click', async function(){
+        var nm=gv('ty-name'); if(!nm){ alert('항목 이름을 적어주세요'); return; }
+        var maxo = TYPES.reduce(function(m,t){ return Math.max(m, t.sort_order||0); }, 0);
+        if(await insertRow('upbo_types',{ name:nm, category:gv('ty-cat')||'일반', sort_order:maxo+1 })){ sv('ty-name',''); await loadTypes(); refreshCountInputs(); }
+        else alert(NEEDS_ADD);
+      });
+
+      async function loadCounts(){
+        var rows = await fetchAll('upbo_counts','id',true); COUNTS = (rows===null)?UPBO_COUNTS_DEFAULTS.slice():rows;
+        refreshCountInputs();
+      }
+      function populateViewerSelect(){
+        var sel=document.getElementById('cnt-viewer'); var cur=sel.value;
+        sel.innerHTML = '<option value="">— 시청자 선택 —</option>' + VIEWERS.map(function(v){ return '<option value="'+v.id+'">'+esc(v.nickname)+'</option>'; }).join('');
+        if(cur) sel.value = cur;
+      }
+      function renderCountInputs(vid){
+        var box=document.getElementById('cnt-types');
+        if(!vid){ box.innerHTML=''; return; }
+        if(!TYPES.length){ box.innerHTML='<div class="adm-hint">먼저 위에서 업보 항목을 추가하세요.</div>'; return; }
+        var my={}; COUNTS.filter(function(c){ return Number(c.viewer_id)===Number(vid); }).forEach(function(c){ my[c.type_id]=c.count; });
+        box.innerHTML = TYPES.map(function(t){
+          return '<div class="adm-item"><div class="ai-main"><div class="ai-title">'+esc(t.name)+(t.category==='이벤트'?' · 이벤트':'')+'</div></div>'
+            + '<input type="number" min="0" value="'+(my[t.id]||0)+'" id="cnt-'+t.id+'" style="width:90px;padding:9px 12px;border-radius:10px;border:1.5px solid var(--line);background:var(--card);color:var(--text);font-size:14px;text-align:center"></div>';
+        }).join('');
+      }
+      function refreshCountInputs(){ var vid=document.getElementById('cnt-viewer').value; renderCountInputs(vid); }
+      document.getElementById('cnt-viewer').addEventListener('change', function(){ renderCountInputs(this.value); });
+      document.getElementById('save-counts').addEventListener('click', async function(){
+        var vid = document.getElementById('cnt-viewer').value;
+        if(!vid){ alert('시청자를 먼저 고르세요'); return; }
+        var rows = TYPES.map(function(t){ var inp=document.getElementById('cnt-'+t.id); return { type_id:t.id, count: inp?parseInt(inp.value||'0',10):0 }; });
+        if(await setViewerCounts(Number(vid), rows)){ flash('msg-counts','저장됐어요 ✓'); await loadCounts(); } else alert(NEEDS);
+      });
+
+      async function loadAll(){
+        await loadProfileForm();
+        loadSchedule(); loadVods();
+        await loadViewers(); await loadTypes(); await loadCounts();
+        populateViewerSelect();
+      }
 
       initTheme();
     })();

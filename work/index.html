@@ -8,6 +8,58 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
   <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../style.css">
+  <style>
+    .upbo-head{ display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; margin-bottom:6px; }
+    .upbo-eyebrow{ font-size:12px; letter-spacing:3px; color:var(--main-dark); font-weight:800; }
+    .upbo-title{ font-family:var(--display); font-size:30px; color:var(--main-dark);
+      background:linear-gradient(135deg,var(--main-dark),var(--accent));
+      -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; }
+    .upbo-update{ font-size:12px; color:var(--text-soft); background:var(--card); border:1px solid var(--line);
+      padding:6px 14px; border-radius:999px; }
+    .search-box{ width:100%; padding:13px 18px; border-radius:999px; border:1.5px solid var(--line); font-size:14px;
+      outline:none; background:var(--card); color:var(--text); margin:14px 0 18px; transition:border-color .16s ease; }
+    .search-box:focus{ border-color:var(--main); }
+
+    .viewer-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+    @media (max-width:680px){ .viewer-grid{ grid-template-columns:repeat(2,1fr); gap:9px; } }
+    @media (max-width:380px){ .viewer-grid{ gap:8px; } .viewer-card{ padding:14px 8px; } .viewer-av,.viewer-av-fb{ width:52px; height:52px; } }
+    .viewer-card{ background:var(--card); border:1.5px solid var(--line); border-radius:18px; padding:20px 14px;
+      text-align:center; cursor:pointer; transition:transform .16s ease, box-shadow .16s ease, border-color .16s ease; }
+    .viewer-card:hover{ transform:translateY(-3px); box-shadow:0 12px 26px rgba(120,150,250,.2); border-color:var(--main); }
+    .viewer-av{ width:62px; height:62px; border-radius:50%; object-fit:cover; margin:0 auto 10px; display:block;
+      border:3px solid var(--main-light); background:var(--main-light); }
+    .viewer-av-fb{ width:62px; height:62px; border-radius:50%; margin:0 auto 10px; display:flex; align-items:center;
+      justify-content:center; background:linear-gradient(135deg,var(--main),var(--accent)); color:#fff; font-size:24px;
+      font-weight:800; border:3px solid var(--main-light); }
+    .viewer-nick{ font-size:14px; font-weight:700; color:var(--text); }
+    .viewer-id{ font-size:11px; color:var(--text-soft); margin:2px 0 8px; }
+    .viewer-total{ display:inline-block; background:linear-gradient(135deg,var(--main),var(--main-dark)); color:#fff;
+      border-radius:999px; padding:4px 14px; font-size:12px; font-weight:800; box-shadow:0 4px 10px rgba(120,150,250,.4); }
+
+    .ov{ position:absolute; left:0; right:0; background:rgba(30,40,70,.4); display:none; align-items:flex-start;
+      justify-content:center; z-index:500; padding:16px; }
+    .ov.show{ display:flex; }
+    .modal{ background:var(--card); border-radius:22px; width:100%; max-width:420px; max-height:84vh; display:flex;
+      flex-direction:column; overflow:hidden; box-shadow:0 20px 60px rgba(60,80,160,.3); animation:pop .22s ease; }
+    @keyframes pop{ from{transform:scale(.94);opacity:0} to{transform:scale(1);opacity:1} }
+    .modal-top{ display:flex; align-items:center; gap:12px; padding:20px 22px 16px; border-bottom:1px solid var(--line); position:relative; }
+    .modal-av{ width:52px; height:52px; border-radius:50%; object-fit:cover; border:3px solid var(--main-light); background:var(--main-light); flex-shrink:0; }
+    .modal-av-fb{ width:52px; height:52px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+      background:linear-gradient(135deg,var(--main),var(--accent)); color:#fff; font-size:20px; font-weight:800;
+      border:3px solid var(--main-light); flex-shrink:0; }
+    .modal-nick{ font-size:18px; font-weight:800; color:var(--main-dark); line-height:1.2; }
+    .modal-id{ font-size:12px; color:var(--text-soft); }
+    .modal-x{ position:absolute; top:16px; right:18px; background:none; border:none; font-size:22px; color:var(--text-soft); cursor:pointer; line-height:1; }
+    .modal-body{ padding:14px 18px 20px; overflow-y:auto; }
+    .upbo-row{ display:flex; align-items:center; gap:10px; padding:11px 14px; margin-bottom:7px; background:var(--main-light);
+      border:1px solid var(--line); border-radius:12px; }
+    .upbo-row .nm{ flex:1; font-size:14px; color:var(--text); font-weight:600; }
+    .upbo-row .evt{ font-size:10px; font-weight:800; color:#b07d18; background:#fff0cc; padding:2px 9px; border-radius:999px; }
+    body.dark .upbo-row .evt{ background:#3a300f; color:#e0b652; }
+    .upbo-row .ct{ font-size:13px; font-weight:800; color:var(--main-dark); background:var(--card); border:1.5px solid var(--line);
+      border-radius:999px; padding:3px 12px; min-width:42px; text-align:center; }
+    .modal-empty{ text-align:center; color:var(--text-soft); padding:30px; font-size:14px; }
+  </style>
 </head>
 <body>
 
@@ -23,54 +75,89 @@
   </nav>
 
   <main class="wrap stagger">
-
-    <div style="text-align:center; margin:6px 0 2px;">
-      <h1 class="page-title">업보</h1>
-      <p class="page-sub">하츠가 별뭉이들과 한 약속 ✦</p>
-    </div>
-
     <section class="card">
-      <div class="work-summary">
-        <span class="work-stat">진행중 <b id="cnt-doing">0</b></span>
-        <span class="work-stat">완료 <b id="cnt-done">0</b></span>
+      <div class="upbo-head">
+        <div>
+          <div class="upbo-eyebrow">UPBO</div>
+          <div class="upbo-title">업보 현황</div>
+        </div>
+        <span class="upbo-update" id="update-date"></span>
       </div>
-      <div class="work-list" id="work-list"></div>
-      <div class="empty" id="work-empty" style="display:none">아직 등록된 업보가 없어요 ✦</div>
+      <input class="search-box" id="search" placeholder="🔍 닉네임 또는 아이디 검색...">
+      <div class="viewer-grid" id="grid"></div>
     </section>
 
-    <footer class="foot">
-      <div class="foot-copy" id="foot-copy">© 2026 하츠 · Heartz</div>
-    </footer>
-
+    <footer class="foot"><div class="foot-copy" id="foot-copy">© 2026 하츠 · Heartz</div></footer>
   </main>
+
+  <div class="ov" id="ov" onclick="if(event.target===this)closeModal()">
+    <div class="modal">
+      <div class="modal-top" id="modal-top"></div>
+      <div class="modal-body" id="modal-body"></div>
+    </div>
+  </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
   <script src="../supabase.js"></script>
   <script>
-    async function load(){
+    var viewers=[], types=[], counts=[];
+
+    async function init(){
       var p = await getProfile();
       if(p.name) document.getElementById('foot-copy').textContent = '© 2026 '+p.name+' · '+(p.reading||'');
-
-      var rows = await fetchAll('work','id', true);
-      if(rows === null) rows = WORK_DEFAULTS.slice();
-      var doing=0, done=0;
-      rows.forEach(function(w){ if(w.status==='완료') done++; else doing++; });
-      document.getElementById('cnt-doing').textContent = doing;
-      document.getElementById('cnt-done').textContent = done;
-
-      var list = document.getElementById('work-list');
-      if(!rows.length){ document.getElementById('work-empty').style.display=''; return; }
-      list.innerHTML = rows.map(function(w, idx){
-        var isDone = w.status === '완료';
-        var chip = isDone ? '<span class="work-chip done">✓ 완료</span>' : '<span class="work-chip doing">진행중</span>';
-        var note = w.note ? '<div class="work-note">'+esc(w.note)+'</div>' : '';
-        return '<div class="work-item'+(isDone?' is-done':'')+'">'
-             + '<span class="work-num">'+(idx+1)+'</span>'
-             + '<div class="work-body"><div class="work-title">'+esc(w.title)+'</div>'+note+'</div>'
-             + chip + '</div>';
-      }).join('');
+      var v = await fetchAll('viewers','sort_order', true);
+      var t = await fetchAll('upbo_types','sort_order', true);
+      var c = await fetchAll('upbo_counts','id', true);
+      viewers = (v === null) ? VIEWERS_DEFAULTS.slice() : v;
+      types   = (t === null) ? UPBO_TYPES_DEFAULTS.slice() : t;
+      counts  = (c === null) ? UPBO_COUNTS_DEFAULTS.slice() : c;
+      var latest = counts.reduce(function(m,x){ return (x.updated_at && x.updated_at > m) ? x.updated_at : m; }, '');
+      document.getElementById('update-date').textContent = latest ? ('갱신일: '+latest.slice(0,10)) : '';
+      render(viewers); initIframeResize();
     }
-    initTheme(); load(); initIframeResize();
+    function viewerTotal(vid){
+      return counts.filter(function(c){ return c.viewer_id===vid && c.count>0; }).reduce(function(s,c){ return s+c.count; }, 0);
+    }
+    function render(list){
+      var grid = document.getElementById('grid');
+      if(!list.length){ grid.innerHTML = '<div class="empty" style="grid-column:1/-1">시청자가 없어요 ✦</div>'; initIframeResize(); return; }
+      grid.innerHTML = list.map(function(v){
+        var av = soopAvatar(v.soop_id), ini = esc((v.nickname||'?').charAt(0));
+        var avHtml = av ? '<img class="viewer-av" src="'+av+'" onerror="this.outerHTML=\'<div class=\\\'viewer-av-fb\\\'>'+ini+'</div>\'">' : '<div class="viewer-av-fb">'+ini+'</div>';
+        return '<div class="viewer-card" onclick="openModal('+v.id+')">'+avHtml
+          + '<div class="viewer-nick">'+esc(v.nickname)+'</div>'
+          + (v.soop_id?'<div class="viewer-id">('+esc(v.soop_id)+')</div>':'<div class="viewer-id">&nbsp;</div>')
+          + '<span class="viewer-total">업보 '+viewerTotal(v.id)+'</span></div>';
+      }).join('');
+      initIframeResize();
+    }
+    function openModal(vid){
+      var v = viewers.find(function(x){ return x.id===vid; }); if(!v) return;
+      var av = soopAvatar(v.soop_id), ini = esc((v.nickname||'?').charAt(0));
+      var avHtml = av ? '<img class="modal-av" src="'+av+'" onerror="this.outerHTML=\'<div class=\\\'modal-av-fb\\\'>'+ini+'</div>\'">' : '<div class="modal-av-fb">'+ini+'</div>';
+      document.getElementById('modal-top').innerHTML = avHtml
+        + '<div><div class="modal-nick">'+esc(v.nickname)+'</div>'+(v.soop_id?'<div class="modal-id">('+esc(v.soop_id)+')</div>':'')+'</div>'
+        + '<button class="modal-x" onclick="closeModal()">✕</button>';
+      var my = {}; counts.filter(function(c){ return c.viewer_id===vid; }).forEach(function(c){ my[c.type_id]=c.count; });
+      var rows = types.filter(function(t){ return (my[t.id]||0) > 0; }).map(function(t){
+        return '<div class="upbo-row"><span class="nm">'+esc(t.name)+'</span>'
+          + (t.category==='이벤트'?'<span class="evt">이벤트</span>':'')
+          + '<span class="ct">×'+my[t.id]+'</span></div>';
+      }).join('');
+      document.getElementById('modal-body').innerHTML = rows || '<div class="modal-empty">아직 업보가 없어요 ♡</div>';
+      var ov = document.getElementById('ov'), e = window.event, y = 200;
+      if(e){ y = (e.pageY != null ? e.pageY : (e.clientY||0)); }
+      ov.style.top = Math.max(10, y - 80) + 'px';
+      ov.classList.add('show');
+    }
+    function closeModal(){ document.getElementById('ov').classList.remove('show'); }
+
+    document.getElementById('search').addEventListener('input', function(e){
+      var q = e.target.value.trim().toLowerCase();
+      render(viewers.filter(function(v){ return (v.nickname||'').toLowerCase().indexOf(q)>-1 || (v.soop_id||'').toLowerCase().indexOf(q)>-1; }));
+    });
+
+    initTheme(); init();
   </script>
 </body>
 </html>

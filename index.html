@@ -153,18 +153,19 @@
     }
 
     async function loadUpcoming(){
-      var rows = await fetchAll('events','edate', true);
-      if(rows === null) rows = EVENTS_DEFAULTS.slice();
+      var rows = await fetchAll('schedule','date', true);
+      if(rows === null) rows = SCHEDULE_DEFAULTS.slice();
       var today = new Date().toISOString().slice(0,10);
-      var future = rows.filter(function(e){ return (e.edate||'') >= today; })
-                       .sort(function(a,b){ return (a.edate||'').localeCompare(b.edate||''); })
+      var future = rows.filter(function(e){ return (e.date||'') >= today; })
+                       .sort(function(a,b){ return (a.date||'').localeCompare(b.date||''); })
                        .slice(0,3);
       var box = document.getElementById('upcoming'), list = document.getElementById('upcoming-list');
       if(!future.length){ box.style.display='none'; return; }
       box.style.display='';
       list.innerHTML = future.map(function(e){
-        return '<div class="up-row"><span class="up-badge">'+esc(fmtBadge(e.edate))+'</span>'
-             + '<span class="up-text">'+esc(e.title)+'</span></div>';
+        var label = (e.time ? e.time+' ' : '') + (e.title || (e.type==='휴방'?'휴방':'방송'));
+        return '<div class="up-row"><span class="up-badge">'+esc(fmtBadge(e.date))+'</span>'
+             + '<span class="up-text">'+esc(label)+'</span></div>';
       }).join('');
     }
 
