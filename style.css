@@ -138,6 +138,8 @@ body::before{
   background:rgba(255,255,255,.92); color:var(--main-dark); font-weight:700; font-size:14px;
   text-decoration:none; transition:all .16s ease; }
 .sbtn:hover{ background:#fff; transform:translateY(-2px); box-shadow:0 8px 18px rgba(40,55,120,.25); }
+body.dark .sbtn{ background:#e4eaff; color:#283357; }
+body.dark .sbtn:hover{ background:#fff; color:#1f2747; box-shadow:0 8px 18px rgba(0,0,0,.4); }
 
 /* ── 스탯 카드 ── */
 .stats{ display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
