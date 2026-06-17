@@ -16,6 +16,8 @@
       -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; }
     .upbo-update{ font-size:12px; color:var(--text-soft); background:var(--card); border:1px solid var(--line);
       padding:6px 14px; border-radius:999px; }
+    .upbo-head-actions{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+    .inquiry-btn.inline{ position:static; box-shadow:none; }
     .search-box{ width:100%; padding:13px 18px; border-radius:999px; border:1.5px solid var(--line); font-size:14px;
       outline:none; background:var(--card); color:var(--text); margin:14px 0 18px; transition:border-color .16s ease; }
     .search-box:focus{ border-color:var(--main); }
@@ -75,14 +77,16 @@
   </nav>
 
   <main class="wrap stagger">
-    <section class="card" style="position:relative">
-      <button class="inquiry-btn" type="button" onclick="openInquiry()">✉️ 문의</button>
+    <section class="card">
       <div class="upbo-head">
         <div>
           <div class="upbo-eyebrow">UPBO</div>
           <div class="upbo-title">업보 현황</div>
         </div>
-        <span class="upbo-update" id="update-date"></span>
+        <div class="upbo-head-actions">
+          <span class="upbo-update" id="update-date"></span>
+          <button class="inquiry-btn inline" type="button" onclick="openInquiry()">✉️ 문의</button>
+        </div>
       </div>
       <input class="search-box" id="search" placeholder="🔍 닉네임 또는 아이디 검색...">
       <div class="viewer-grid" id="grid"></div>
