@@ -64,6 +64,11 @@ const UPBO_COUNTS_DEFAULTS = [
   { viewer_id:2, type_id:3, count:2, updated_at:'2026-06-15' },
   { viewer_id:3, type_id:1, count:1, updated_at:'2026-06-14' },
 ];
+const INQUIRIES_DEFAULTS = [
+  { id:1, nickname:'별뭉이팬', message:'방송 항상 잘 보고 있어요! 노래 방송 또 해주세요 🤍', page:'프로필', created_at:'2026-06-16 21:30' },
+  { id:2, nickname:'궁금이',   message:'합방 일정은 따로 공지되나요?',                     page:'프로필', created_at:'2026-06-15 18:02' },
+  { id:3, nickname:'정정요청', message:'제 업보 카운트가 하나 빠진 것 같아요!',           page:'업보',   created_at:'2026-06-14 12:10' },
+];
 
 /* ---- 공용 함수 ---- */
 async function getProfile(){

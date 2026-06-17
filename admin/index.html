@@ -37,6 +37,7 @@
         <button class="adm-tab" data-tab="sched" type="button">일정</button>
         <button class="adm-tab" data-tab="vods" type="button">다시보기</button>
         <button class="adm-tab" data-tab="work" type="button">업보</button>
+        <button class="adm-tab" data-tab="inq" type="button">문의</button>
       </div>
 
       <!-- 프로필 -->
@@ -181,6 +182,15 @@
           <div id="cnt-types"></div>
           <div class="adm-save-row"><button class="adm-btn primary" id="save-counts" type="button">카운트 저장</button><span class="adm-msg" id="msg-counts"></span></div>
           <p class="adm-hint">시청자를 고르면 각 항목 옆에 숫자를 입력할 수 있어요. 0으로 두면 그 항목은 표시되지 않습니다.</p>
+        </div>
+      </div>
+
+      <!-- 문의 -->
+      <div class="adm-panel" id="tab-inq">
+        <div class="card">
+          <h2 class="sec-title"><span class="dot"></span>받은 문의</h2>
+          <p class="adm-hint" style="margin:0 0 10px">프로필·업보 페이지에서 받은 문의예요. (최신순)</p>
+          <div class="adm-list" id="inq-adm-list"></div>
         </div>
       </div>
 
@@ -352,11 +362,20 @@
         if(await setViewerCounts(Number(vid), rows)){ flash('msg-counts','저장됐어요 ✓'); await loadCounts(); } else alert(NEEDS);
       });
 
+      async function loadInquiries(){
+        var rows = await fetchAll('inquiries','created_at', false); if(rows===null) rows = INQUIRIES_DEFAULTS.slice();
+        renderList('inq-adm-list', rows, function(q){
+          var when=(q.created_at||'').replace('T',' ').slice(0,16);
+          return { title:(q.message||''), sub:'['+(q.page||'')+'] '+(q.nickname||'(익명)')+(when?(' · '+when):'') };
+        }, 'inquiries', loadInquiries);
+      }
+
       async function loadAll(){
         await loadProfileForm();
         loadSchedule(); loadVods();
         await loadViewers(); await loadTypes(); await loadCounts();
         populateViewerSelect();
+        loadInquiries();
       }
 
       initTheme();
