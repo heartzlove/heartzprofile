@@ -86,7 +86,7 @@ body::before{
   color:var(--main-dark); text-decoration:none; padding:6px 13px; border-radius:999px;
   background:var(--main-light); transition:all .16s ease; white-space:nowrap; }
 .sec-more:hover{ background:var(--main); color:#fff; }
-.page-title{ font-family:var(--display); font-size:clamp(30px,6vw,46px); color:var(--text);
+.page-title{ font-family:var(--display); font-size:30px; color:var(--text);
   background:linear-gradient(135deg, var(--main-dark), var(--accent));
   -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
   margin-bottom:4px; letter-spacing:.5px; }
