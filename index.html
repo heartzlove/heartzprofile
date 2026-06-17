@@ -46,9 +46,15 @@
           <div class="hero-name-row"><h1 class="hero-name" id="h-name">하츠</h1><span class="hero-en" id="h-en">Heartz</span></div>
           <p class="hero-concept" id="h-concept"></p>
           <div class="hero-links">
-            <a class="sbtn" id="lnk-soop" href="#" target="_blank" rel="noopener">🎮 SOOP</a>
-            <a class="sbtn" id="lnk-youtube" href="#" target="_blank" rel="noopener">▶ 유튜브</a>
-            <a class="sbtn" id="lnk-cafe" href="#" target="_blank" rel="noopener">☕ 팬카페</a>
+            <div class="hero-links-row">
+              <a class="sbtn" id="lnk-soop" href="#" target="_blank" rel="noopener">🎮 SOOP</a>
+              <a class="sbtn" id="lnk-youtube" href="#" target="_blank" rel="noopener">▶ 유튜브</a>
+              <a class="sbtn" id="lnk-cafe" href="#" target="_blank" rel="noopener">☕ 팬카페</a>
+            </div>
+            <div class="hero-links-row">
+              <a class="sbtn" id="lnk-fancim" href="#" target="_blank" rel="noopener">💗 팬심</a>
+              <a class="sbtn" id="lnk-fancimm" href="#" target="_blank" rel="noopener">💗 팬심m</a>
+            </div>
           </div>
         </div>
       </div>
@@ -111,13 +117,8 @@
     </section>
 
     <footer class="foot">
-      <div class="foot-links">
-        <a id="foot-soop" href="#" target="_blank" rel="noopener">SOOP</a>·
-        <a id="foot-youtube" href="#" target="_blank" rel="noopener">유튜브</a>·
-        <a id="foot-cafe" href="#" target="_blank" rel="noopener">팬카페</a>·
-        <a href="admin/">관리자</a>
-      </div>
-      <div class="foot-copy" id="foot-copy">© 2026 하츠 · Heartz</div>
+      <div class="foot-copy" id="foot-copy">© 2026 하츠 Official.</div>
+      <div class="foot-biz" id="foot-biz">비즈니스 문의 · heartzstar87@gmail.com</div>
     </footer>
 
   </main>
@@ -135,9 +136,9 @@
       var av = p.avatar || soopAvatar(p.soop_id);
       var img = document.getElementById('h-avatar-img'), ph = document.getElementById('h-avatar-ph');
       if(av){ img.src = av; img.style.display='block'; ph.style.display='none'; }
-      // 소셜 (히어로 + 푸터)
+      // 소셜 (히어로)
       setHref('lnk-soop', p.soop); setHref('lnk-youtube', p.youtube); setHref('lnk-cafe', p.cafe);
-      setHref('foot-soop', p.soop); setHref('foot-youtube', p.youtube); setHref('foot-cafe', p.cafe);
+      setHref('lnk-fancim', p.fancim); setHref('lnk-fancimm', p.fancimm);
       setHref('vod-more', p.vod_url);
       // 스탯
       setText('st-debut', p.debut); setText('st-birthday', p.birthday);
@@ -149,7 +150,8 @@
       var days = Array.isArray(p.days) ? p.days.map(String) : [];
       for(var i=0;i<=6;i++){ var c=document.getElementById('day-'+i); if(c) c.className='day'+(days.indexOf(String(i))>-1?' on':''); }
       setText('sched-note', p.sched_note);
-      if(p.name) setText('foot-copy', '© 2026 '+p.name+' · '+(p.reading||''));
+      setText('foot-copy', '© 2026 '+(p.name||'하츠')+' Official.');
+      setText('foot-biz', '비즈니스 문의 · '+(p.email||''));
     }
 
     async function loadUpcoming(){

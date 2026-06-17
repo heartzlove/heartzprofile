@@ -70,7 +70,12 @@
           <div class="adm-field"><label>SOOP 주소</label><input id="f-soop"></div>
           <div class="adm-field"><label>유튜브 주소</label><input id="f-youtube"></div>
           <div class="adm-field"><label>팬카페 주소</label><input id="f-cafe"></div>
+          <div class="adm-row2">
+            <div class="adm-field"><label>팬심 주소</label><input id="f-fancim"></div>
+            <div class="adm-field"><label>팬심m 주소</label><input id="f-fancimm"></div>
+          </div>
           <div class="adm-field"><label>다시보기 페이지 주소 (전체 보기 버튼)</label><input id="f-vodurl"></div>
+          <div class="adm-field"><label>비즈니스 문의 이메일 (푸터)</label><input id="f-email" placeholder="heartzstar87@gmail.com"></div>
           <div class="adm-row2">
             <div class="adm-field"><label>SOOP 아이디 (프사 자동)</label><input id="f-soopid" placeholder="ophillia"></div>
             <div class="adm-field"><label>프사 직접 지정 (선택)</label><input id="f-avatar" placeholder="비우면 SOOP 프사"></div>
@@ -239,7 +244,8 @@
       var MAP = { name:'name', reading:'reading', concept:'concept', debut:'debut', birthday:'birthday',
         fan:'fan_name', content:'content', motif:'motif', sig:'signature', agency:'agency',
         personality:'personality', song:'song', soop:'soop', youtube:'youtube', cafe:'cafe',
-        vodurl:'vod_url', soopid:'soop_id', avatar:'avatar' };
+        vodurl:'vod_url', soopid:'soop_id', avatar:'avatar',
+        fancim:'fancim', fancimm:'fancimm', email:'email' };
       async function loadProfileForm(){
         PROFILE = await getProfile();
         for(var k in MAP) sv('f-'+k, PROFILE[MAP[k]]);

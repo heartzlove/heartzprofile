@@ -132,7 +132,8 @@ body::before{
   text-shadow:0 4px 18px rgba(40,55,120,.35); }
 .hero-en{ font-weight:700; font-size:17px; letter-spacing:3px; color:rgba(255,255,255,.78); text-transform:uppercase; }
 .hero-concept{ margin-top:14px; font-size:16px; font-weight:500; color:rgba(255,255,255,.95); }
-.hero-links{ margin-top:20px; display:flex; gap:9px; flex-wrap:wrap; }
+.hero-links{ margin-top:20px; display:flex; flex-direction:column; gap:9px; align-items:flex-start; }
+.hero-links-row{ display:flex; gap:9px; flex-wrap:wrap; }
 .sbtn{ display:inline-flex; align-items:center; gap:6px; padding:9px 16px; border-radius:999px;
   background:rgba(255,255,255,.92); color:var(--main-dark); font-weight:700; font-size:14px;
   text-decoration:none; transition:all .16s ease; }
@@ -251,6 +252,7 @@ body.dark .work-chip.done{ background:#1d3327; color:#56c98a; }
 .foot-links a{ color:var(--text-soft); font-size:13px; font-weight:600; text-decoration:none; }
 .foot-links a:hover{ color:var(--main-dark); }
 .foot-copy{ color:var(--text-soft); font-size:12px; }
+.foot-biz{ color:var(--text-soft); font-size:12px; margin-top:4px; }
 
 /* ── 관리자 ── */
 .adm-wrap{ max-width:720px; margin:0 auto; }
@@ -312,7 +314,8 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   .hero{ padding:30px 22px; border-radius:24px; }
   .hero-inner{ flex-direction:column; text-align:center; gap:18px; }
   .hero-name-row{ justify-content:center; }
-  .hero-links{ justify-content:center; }
+  .hero-links{ align-items:center; }
+  .hero-links-row{ justify-content:center; }
   .hero-name{ font-size:44px; }
   .hero-avatar{ width:140px; height:140px; }
   .stats{ grid-template-columns:repeat(2,1fr); }

@@ -87,7 +87,10 @@
       <div class="viewer-grid" id="grid"></div>
     </section>
 
-    <footer class="foot"><div class="foot-copy" id="foot-copy">© 2026 하츠 · Heartz</div></footer>
+    <footer class="foot">
+      <div class="foot-copy" id="foot-copy">© 2026 하츠 Official.</div>
+      <div class="foot-biz" id="foot-biz">비즈니스 문의 · heartzstar87@gmail.com</div>
+    </footer>
   </main>
 
   <div class="ov" id="ov" onclick="if(event.target===this)closeModal()">
@@ -104,7 +107,8 @@
 
     async function init(){
       var p = await getProfile();
-      if(p.name) document.getElementById('foot-copy').textContent = '© 2026 '+p.name+' · '+(p.reading||'');
+      if(p.name){ document.getElementById('foot-copy').textContent = '© 2026 '+p.name+' Official.'; }
+      document.getElementById('foot-biz').textContent = '비즈니스 문의 · '+(p.email||'');
       var v = await fetchAll('viewers','sort_order', true);
       var t = await fetchAll('upbo_types','sort_order', true);
       var c = await fetchAll('upbo_counts','id', true);
